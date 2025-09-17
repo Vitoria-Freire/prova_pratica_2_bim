@@ -241,5 +241,6 @@ def jogos_delete(id):
 
 @app.route('/classificacao')
 def classificacao_index():
-    classificacao = ClassificacaoController.listar_classificacoes()
-    return render_template('classificacao/index.html', classificacao=classificacao)
+    # classificacao = ClassificacaoController.listar_classificacoes()
+    return render_template('classificacao/index.html')
+    # pass

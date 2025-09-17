@@ -1,12 +1,55 @@
-{% extends base.html %}
+{% extends "base.html" %}
 
 {% block title %} Classificação - Gerenciamento de Futebol {% endblock %}
 
 {% block content %}
 <div class="d-flex justify-content-between align-items-center mb-4">
-    <h2><i class="fas fa-users me-2"></i>Classificação</h2>
-    <!-- <a href="{{ url_for('times_create') }}" class="btn btn-primary">
+    <h2><i class="fa-solid fa-table me-2"></i>Classificação</h2>
+    <a href="{{ url_for('times_create') }}" class="btn btn-primary">
         <i class="fas fa-plus me-2"></i>Novo Time
-    </a> -->
+    </a>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        {% if classificacao %}
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Time</th>
+                            <th>Jogos</th>
+                            <th>Vitórias</th>
+                            <th>Derrotas</th>
+                            <th>Gols Marcados</th>
+                            <th>Gols Sofridos</th>
+                            <th>Saldo de Gols</th>
+                            <th>Pontos</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for classificado in classificacao %}
+                        <tr>
+                            <td><strong>{{ classificado.time.nome }}</strong></td>
+                            <!-- <td>{{ classificado.jogos }}</td>
+                            <td>{{ classificado.vitorias }}</td>
+                            <td>{{ classificado.time.nome }}</td>
+                            <td>>{{ classificado.numero_camisa }}</td> -->
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <div class="text-center py-4">
+                <i class="fas fa-running fa-3x text-muted mb-3"></i>
+                <h5>Tabela não finalizada</h5>
+                <!-- <p class="text-muted">Cadastre o primeiro jogador para começar.</p> -->
+                <!-- <a href="{{ url_for('jogadores_create') }}" class="btn btn-success">
+                    <i class="fas fa-plus me-2"></i>Cadastrar Jogador
+                </a> -->
+            </div>
+        {% endif %}
+    </div>
 </div>
 {% endblock %}
