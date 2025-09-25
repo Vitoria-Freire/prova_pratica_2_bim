@@ -243,4 +243,3 @@ def jogos_delete(id):
 def classificacao_index():
     # classificacao = ClassificacaoController.listar_classificacoes()
     return render_template('classificacao/index.html')
-    # pass
