@@ -4,3 +4,4 @@ from .jogador import Jogador
 from .treinador import Treinador
 from .jogo import Jogo
 from .classificacao import Classificacao
+from .usuario import Usuario
