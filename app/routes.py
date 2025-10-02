@@ -5,6 +5,14 @@ from app.controllers import CompeticaoController, TreinadorController, TimeContr
 
 
 @app.route('/')
+def home():
+    return render_template('inicio.html')
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    formulario = LoginForm()
+    if formulario.valida
+@app.route('/home')
 def index():
     stats = {
         'times': len(TimeController.listar_times()),
