@@ -11,10 +11,9 @@ app.config.from_object(Config)
 db = SQLAlchemy()
 csrf = CSRFProtect(app)
 migrate = Migrate()
-db.init_app(app)
-migrate.init_app(app, db)
 
 db.init_app(app)
+migrate.init_app(app, db)
 
 from app import routes, models
 
