@@ -1,7 +1,8 @@
-from flask import Flask, render_template, redirect, url_for, flash
 from app import app, db
-from app.forms import TimeForm, JogadorForm, TreinadorForm, CompeticaoForm, JogoForm
-from app.controllers import CompeticaoController, TreinadorController, TimeController, JogadorController, JogoController, ClassificacaoController
+# from flask_login import login_required
+from flask import Flask, render_template, redirect, url_for, flash, request
+from app.forms import TimeForm, JogadorForm, TreinadorForm, CompeticaoForm, JogoForm, LoginForm, UsuarioForm
+from app.controllers import CompeticaoController, TreinadorController, TimeController, JogadorController, JogoController, AutheticationController, UsuarioController
 
 
 @app.route('/')
@@ -11,7 +12,37 @@ def home():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     formulario = LoginForm()
-    if formulario.valida
+    if formulario.validate_on_submit(formulario):
+        if AutheticationController.login(formulario):
+            next_page = request.args.get('next')
+            if not next_page:
+                next_page = url_for('home')
+            return redirect(next_page)
+        else:
+            flash ('Usuario ou senha invalidos', 'error')
+    return render_template('login.html', title='Login', form=formulario)
+
+@app.route('/logout')
+def logout():
+    success = AutheticationController.logout()
+    if not success:
+        flash('Erro ao realizar o logout', 'error')
+    return redirect(url_for('home'))
+
+@app.route('/cadastrar', methods= ['GET', 'POST'])
+# @login_required
+def cadastrar():
+    formulario = UsuarioForm()
+    if formulario.validate_on_submit():
+        sucesso = UsuarioController.salvar(formulario)
+        if sucesso:
+            flash('Usuário cadastrado com sucesso!', category='success')
+            return redirect(url_for('login'))
+        else: 
+            flash('Erro ao cadastrar o novo usuário.', category='error')
+            return render_template('cadastro.html', form = formulario)
+    return render_template('cadastro.html', form = formulario)
+
 @app.route('/home')
 def index():
     stats = {
